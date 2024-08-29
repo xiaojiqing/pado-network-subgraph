@@ -3,6 +3,15 @@
     "WorkerMgt": {
       "address": "0x05cB7A91269A436b2C184F1Fc3A5Bf8A53566387",
       "startBlock": 2136652
+    },
+    "DataMgt": {
+      "address": "0xE48d23f3d21e2df9F5B7317BC1b0d35FFC801289"
+    },
+    "FeeMgt": {
+      "address": "0xfcde80f61B97FA974A5E1De2A2580A5843CaABE2"
+    },
+    "TaskMgt": {
+      "address": "0xdd915b9e28e4356771E63469BbdF888264BB5b87"
     }
   }
 }
