@@ -1,0 +1,137 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: WorkerMgt
+    network: holesky
+    source:
+      address: "0x05cB7A91269A436b2C184F1Fc3A5Bf8A53566387"
+      abi: WorkerMgt
+      startBlock: 2136652
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Initialized
+        - OwnershipTransferred
+        - SelectDataWorkers
+        - WorkerRegistry
+      abis:
+        - name: WorkerMgt
+          file: ./abis/WorkerMgt.json
+      eventHandlers:
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: SelectDataWorkers(indexed bytes32,bytes32[])
+          handler: handleSelectDataWorkers
+        - event: WorkerRegistry(indexed bytes32,uint8,address)
+          handler: handleWorkerRegistry
+      file: ./src/worker-mgt.ts
+  - kind: ethereum
+    name: DataMgt
+    network: holesky
+    source:
+      address: "0xE48d23f3d21e2df9F5B7317BC1b0d35FFC801289"
+      abi: DataMgt
+      startBlock: 2136652
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DataDeleted
+        - DataPrepareRegistry
+        - DataRegistered
+        - RouterUpdated
+      abis:
+        - name: DataMgt
+          file: ./abis/DataMgt.json
+      eventHandlers:
+        - event: DataDeleted(indexed bytes32)
+          handler: handleDataDeleted
+        - event: DataPrepareRegistry(indexed bytes32,bytes[])
+          handler: handleDataPrepareRegistry
+        - event: DataRegistered(indexed bytes32)
+          handler: handleDataRegistered
+        - event: RouterUpdated(address,address)
+          handler: handleRouterUpdated
+      file: ./src/data-mgt.ts
+  - kind: ethereum
+    name: FeeMgt
+    network: holesky
+    source:
+      address: "0xfcde80f61B97FA974A5E1De2A2580A5843CaABE2"
+      abi: FeeMgt
+      startBlock: 2136652
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - FeeLocked
+        - FeeSettled
+        - FeeTokenAdded
+        - FeeTokenDeleted
+        - FeeTokenUpdated
+        - FeeUnlocked
+        - TokenTransfered
+        - TokenWithdrawn
+      abis:
+        - name: FeeMgt
+          file: ./abis/FeeMgt.json
+      eventHandlers:
+        - event: FeeLocked(indexed bytes32,string,uint256)
+          handler: handleFeeLocked
+        - event: FeeSettled(indexed bytes32,string,uint256)
+          handler: handleFeeSettled
+        - event: FeeTokenAdded(indexed string,address,uint256)
+          handler: handleFeeTokenAdded
+        - event: FeeTokenDeleted(indexed string)
+          handler: handleFeeTokenDeleted
+        - event: FeeTokenUpdated(indexed string,address,uint256)
+          handler: handleFeeTokenUpdated
+        - event: FeeUnlocked(indexed bytes32,string,uint256)
+          handler: handleFeeUnlocked
+        - event: TokenTransfered(address,string,uint256)
+          handler: handleTokenTransfered
+        - event: TokenWithdrawn(address,string,uint256)
+          handler: handleTokenWithdrawn
+      file: ./src/fee-mgt.ts
+  - kind: ethereum
+    name: TaskMgt
+    network: holesky
+    source:
+      address: "0xdd915b9e28e4356771E63469BbdF888264BB5b87"
+      abi: TaskMgt
+      startBlock: 2136652
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ResultReported
+        - TaskCompleted
+        - TaskDispatched
+        - TaskFailed
+        - TaskReportTimeoutUpdated
+      abis:
+        - name: TaskMgt
+          file: ./abis/TaskMgt.json
+      eventHandlers:
+        - event: ResultReported(indexed bytes32,address)
+          handler: handleResultReported
+        - event: TaskCompleted(indexed bytes32)
+          handler: handleTaskCompleted
+        - event: TaskDispatched(indexed bytes32,bytes32[])
+          handler: handleTaskDispatched
+        - event: TaskFailed(indexed bytes32)
+          handler: handleTaskFailed
+        - event: TaskReportTimeoutUpdated(uint64)
+          handler: handleTaskReportTimeoutUpdated
+      file: ./src/task-mgt.ts
