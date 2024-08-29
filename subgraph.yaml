@@ -1,0 +1,35 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: WorkerMgt
+    network: holesky
+    source:
+      address: "0x05cB7A91269A436b2C184F1Fc3A5Bf8A53566387"
+      abi: WorkerMgt
+      startBlock: 2136652
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Initialized
+        - OwnershipTransferred
+        - SelectDataWorkers
+        - WorkerRegistry
+      abis:
+        - name: WorkerMgt
+          file: ./abis/WorkerMgt.json
+      eventHandlers:
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: SelectDataWorkers(indexed bytes32,bytes32[])
+          handler: handleSelectDataWorkers
+        - event: WorkerRegistry(indexed bytes32,uint8,address)
+          handler: handleWorkerRegistry
+      file: ./src/worker-mgt.ts
