@@ -1,0 +1,607 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "DataDeleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes[]",
+        "name": "publicKeys",
+        "type": "bytes[]"
+      }
+    ],
+    "name": "DataPrepareRegistry",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "DataRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "contract IRouter",
+        "name": "oldRouter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract IRouter",
+        "name": "newRouter",
+        "type": "address"
+      }
+    ],
+    "name": "RouterUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "dataUser",
+        "type": "address"
+      }
+    ],
+    "name": "checkAndGetPermittedDataById",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "dataId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "string",
+            "name": "dataTag",
+            "type": "string"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "tokenSymbol",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "price",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct PriceInfo",
+            "name": "priceInfo",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bytes",
+            "name": "dataContent",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "t",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "n",
+                "type": "uint32"
+              }
+            ],
+            "internalType": "struct EncryptionSchema",
+            "name": "encryptionSchema",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "workerIds",
+            "type": "bytes32[]"
+          },
+          {
+            "internalType": "uint64",
+            "name": "registeredTimestamp",
+            "type": "uint64"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "enum DataStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "internalType": "address[]",
+            "name": "permissions",
+            "type": "address[]"
+          }
+        ],
+        "internalType": "struct DataInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "deleteDataById",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "getDataById",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "dataId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "string",
+            "name": "dataTag",
+            "type": "string"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "tokenSymbol",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "price",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct PriceInfo",
+            "name": "priceInfo",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bytes",
+            "name": "dataContent",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "t",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "n",
+                "type": "uint32"
+              }
+            ],
+            "internalType": "struct EncryptionSchema",
+            "name": "encryptionSchema",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "workerIds",
+            "type": "bytes32[]"
+          },
+          {
+            "internalType": "uint64",
+            "name": "registeredTimestamp",
+            "type": "uint64"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "enum DataStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "internalType": "address[]",
+            "name": "permissions",
+            "type": "address[]"
+          }
+        ],
+        "internalType": "struct DataInfo",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "getDataByOwner",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes32",
+            "name": "dataId",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "string",
+            "name": "dataTag",
+            "type": "string"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "tokenSymbol",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "price",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct PriceInfo",
+            "name": "priceInfo",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bytes",
+            "name": "dataContent",
+            "type": "bytes"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint32",
+                "name": "t",
+                "type": "uint32"
+              },
+              {
+                "internalType": "uint32",
+                "name": "n",
+                "type": "uint32"
+              }
+            ],
+            "internalType": "struct EncryptionSchema",
+            "name": "encryptionSchema",
+            "type": "tuple"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "workerIds",
+            "type": "bytes32[]"
+          },
+          {
+            "internalType": "uint64",
+            "name": "registeredTimestamp",
+            "type": "uint64"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "enum DataStatus",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "internalType": "address[]",
+            "name": "permissions",
+            "type": "address[]"
+          }
+        ],
+        "internalType": "struct DataInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IRouter",
+        "name": "_router",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "contractOwner",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "dataUser",
+        "type": "address"
+      }
+    ],
+    "name": "isDataPermitted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint32",
+            "name": "t",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "n",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct EncryptionSchema",
+        "name": "encryptionSchema",
+        "type": "tuple"
+      }
+    ],
+    "name": "prepareRegistry",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes[]",
+        "name": "publicKeys",
+        "type": "bytes[]"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "dataId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "dataTag",
+        "type": "string"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "tokenSymbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct PriceInfo",
+        "name": "priceInfo",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "dataContent",
+        "type": "bytes"
+      },
+      {
+        "internalType": "address[]",
+        "name": "permissions",
+        "type": "address[]"
+      }
+    ],
+    "name": "register",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "registryCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "router",
+    "outputs": [
+      {
+        "internalType": "contract IRouter",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IRouter",
+        "name": "_router",
+        "type": "address"
+      }
+    ],
+    "name": "updateRouter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

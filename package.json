@@ -1,0 +1,25 @@
+{
+  "name": "pado-network-subgraph",
+  "version": "0.0.1",
+  "description": "Subgraph to index the main objects of pado-network-contract",
+  "keywords": [
+    "pado-network-contract",
+    "pado-network-subgraph",
+    "blockchain",
+    "ethereum",
+    "smart-contracts",
+    "solidity"
+  ],
+  "repository": "github.com/pado-labs/pado-network-subgraph",
+  "license": "MIT",
+  "author": "padolabs",
+  "scripts": {
+  },
+
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "0.73.0",
+    "@graphprotocol/graph-ts": "0.31.0",
+    "assemblyscript": "0.19.10",
+    "matchstick-as": "0.6.0"
+  }
+}

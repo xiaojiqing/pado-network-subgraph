@@ -1,0 +1,14 @@
+type DataInfo @entity {
+    id: Bytes!
+    dataTag: String!
+    tokenSymbol: String!
+    price: BigInt!
+    dataContent: Bytes!
+    t: BigInt!
+    n: BigInt!
+    workerIds: [Bytes!]!
+    registeredTimestamp: BigInt!
+    owner: Bytes!
+    status: Int!
+    permissions: [Bytes!]!
+}

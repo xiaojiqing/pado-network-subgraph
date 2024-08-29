@@ -1,0 +1,25 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema-data.graphql
+dataSources:
+  - kind: ethereum
+    name: DataMgt
+    network: holesky
+    source:
+      abi: DataMgt
+      address: "0xE48d23f3d21e2df9F5B7317BC1b0d35FFC801289"
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DataInfo
+      abis:
+        - name: DataMgt
+          file: ./abis/DataMgt.json
+      eventHandlers:
+        - event: DataRegistered(indexed bytes32)
+          handler: handleDataRegistered
+        - event: DataDeleted(indexed bytes32)
+          handler: handleDataDeleted
+      file: ./src/datamgt.ts
