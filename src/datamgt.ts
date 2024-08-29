@@ -16,11 +16,7 @@ export function handleDataRegistered(event: DataRegistered): void {
     dataInfo.registeredTimestamp = data.registeredTimestamp;
     dataInfo.owner = data.owner;
     dataInfo.status = data.status;
-    dataInfo.permissions = [];
-
-    for (let i = 0; i < data.permissions.length; i++) {
-        dataInfo.permissions.push(data.permissions[i]);
-    }
+    dataInfo.permissions = changetype<Bytes[]>(data.permissions);
 
     dataInfo.save();
 }
