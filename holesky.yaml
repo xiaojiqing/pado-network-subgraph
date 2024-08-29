@@ -23,3 +23,28 @@ dataSources:
         - event: DataDeleted(indexed bytes32)
           handler: handleDataDeleted
       file: ./src/datamgt.ts
+  - kind: ethereum
+    name: TaskMgt
+    network: holesky
+    source:
+      abi: TaskMgt
+      address: "0xdd915b9e28e4356771E63469BbdF888264BB5b87"
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TaskInfo
+      abis:
+        - name: TaskMgt
+          file: ./abis/TaskMgt.json
+      eventHandlers:
+        - event: TaskDispatched(indexed bytes32,bytes32[])
+          handler: handleTaskDispatched
+        - event: ResultReported(indexed bytes32,address)
+          handler: handleResultReported
+        - event: TaskCompleted(indexed bytes32)
+          handler: handleTaskCompleted
+        - event: TaskFailed(indexed bytes32)
+          handler: handleTaskFailed
+      file: ./src/taskmgt.ts

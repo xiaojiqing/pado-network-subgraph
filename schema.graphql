@@ -12,3 +12,22 @@ type DataInfo @entity {
     status: Int!
     permissions: [Bytes!]!
 }
+
+type TaskInfo @entity {
+    id: Bytes!
+    taskType: Int!
+    consumerPk: Bytes!
+    tokenSymbol: String!
+    dataId: Bytes!
+    price: BigInt!
+    t: BigInt!
+    n: BigInt!
+    workerIds: [Bytes!]!
+    results: [Bytes!]!
+    hasReported: [Boolean!]!
+    reportCount: BigInt!
+    time: BigInt!
+    status: Int!
+    submitter: Bytes!
+    code: Bytes
+}
