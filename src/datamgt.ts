@@ -3,31 +3,8 @@ import {DataInfo, DataCounter} from "../generated/schema";
 import {Bytes} from "@graphprotocol/graph-ts";
 
 const counterName = "DataCounter";
-export function handleDataPrepareRegistry(event: DataPrepareRegistry): void {
-    const dataInfo = new DataInfo(event.params.dataId);
-    const dataMgt = DataMgt.bind(event.address);
-
-    const data = dataMgt.getDataById(event.params.dataId);
-    dataInfo.id = data.dataId;
-    dataInfo.tokenSymbol = data.priceInfo.tokenSymbol;
-    dataInfo.price = data.priceInfo.price;
-    dataInfo.dataContent = data.dataContent;
-    dataInfo.t = data.encryptionSchema.t;
-    dataInfo.n = data.encryptionSchema.n;
-    dataInfo.workerIds = data.workerIds;
-    dataInfo.registeredTimestamp = data.registeredTimestamp;
-    dataInfo.owner = data.owner;
-    dataInfo.status = data.status;
-    dataInfo.permissions = changetype<Bytes[]>(data.permissions);
-    dataInfo.purchaseCount = 0;
-
-    dataInfo.save();
-}
 export function handleDataRegistered(event: DataRegistered): void {
-    let dataInfo = DataInfo.load(event.params.dataId);
-    if (!dataInfo) {
-        dataInfo = new DataInfo(event.params.dataId);
-    }
+    const dataInfo = new DataInfo(event.params.dataId);
     const dataMgt = DataMgt.bind(event.address);
 
     const data = dataMgt.getDataById(event.params.dataId);

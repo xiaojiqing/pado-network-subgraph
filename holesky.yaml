@@ -20,8 +20,6 @@ dataSources:
         - name: DataMgt
           file: ./abis/DataMgt.json
       eventHandlers:
-        - event: DataPrepareRegistry(indexed bytes32,bytes[])
-          handler: handleDataPrepareRegistry
         - event: DataRegistered(indexed bytes32)
           handler: handleDataRegistered
         - event: DataDeleted(indexed bytes32)
