@@ -1,6 +1,6 @@
 type DataInfo @entity {
     id: Bytes!
-    dataTag: String!
+    dataTag: String
     tokenSymbol: String!
     price: BigInt!
     dataContent: Bytes!
@@ -11,6 +11,7 @@ type DataInfo @entity {
     owner: Bytes!
     status: Int!
     permissions: [Bytes!]!
+    purchaseCount: Int!
 }
 
 type TaskInfo @entity {
@@ -30,4 +31,17 @@ type TaskInfo @entity {
     status: Int!
     submitter: Bytes!
     code: Bytes
+}
+
+type DataCounter @entity {
+    id: String!
+    validCount: Int
+    deletedCount: Int
+}
+
+type TaskCounter @entity {
+    id: String!
+    pendingCount: Int
+    completedCount: Int
+    failedCount: Int
 }
