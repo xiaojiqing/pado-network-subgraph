@@ -68,34 +68,17 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - FeeLocked
-        - FeeSettled
-        - FeeTokenAdded
-        - FeeTokenDeleted
-        - FeeTokenUpdated
-        - FeeUnlocked
-        - TokenTransfered
-        - TokenWithdrawn
+        - FeeTokenInfo
       abis:
         - name: FeeMgt
           file: ./abis/FeeMgt.json
       eventHandlers:
-        - event: FeeLocked(indexed bytes32,string,uint256)
-          handler: handleFeeLocked
-        - event: FeeSettled(indexed bytes32,string,uint256)
-          handler: handleFeeSettled
         - event: FeeTokenAdded(indexed string,address,uint256)
           handler: handleFeeTokenAdded
         - event: FeeTokenDeleted(indexed string)
           handler: handleFeeTokenDeleted
         - event: FeeTokenUpdated(indexed string,address,uint256)
           handler: handleFeeTokenUpdated
-        - event: FeeUnlocked(indexed bytes32,string,uint256)
-          handler: handleFeeUnlocked
-        - event: TokenTransfered(address,string,uint256)
-          handler: handleTokenTransfered
-        - event: TokenWithdrawn(address,string,uint256)
-          handler: handleTokenWithdrawn
       file: ./src/fee-mgt.ts
   - kind: ethereum
     name: TaskMgt

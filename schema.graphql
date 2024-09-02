@@ -33,84 +33,6 @@ type WorkerRegistry @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
-type FeeLocked @entity(immutable: true) {
-  id: Bytes!
-  taskId: Bytes! # bytes32
-  tokenSymbol: String! # string
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FeeSettled @entity(immutable: true) {
-  id: Bytes!
-  taskId: Bytes! # bytes32
-  tokenSymbol: String! # string
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FeeTokenAdded @entity(immutable: true) {
-  id: Bytes!
-  tokenSymbol: String! # string
-  tokenAddress: Bytes! # address
-  computingPrice: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FeeTokenDeleted @entity(immutable: true) {
-  id: Bytes!
-  tokenSymbol: String! # string
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FeeTokenUpdated @entity(immutable: true) {
-  id: Bytes!
-  tokenSymbol: String! # string
-  tokenAddress: Bytes! # address
-  computingPrice: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type FeeUnlocked @entity(immutable: true) {
-  id: Bytes!
-  taskId: Bytes! # bytes32
-  tokenSymbol: String! # string
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type TokenTransfered @entity(immutable: true) {
-  id: Bytes!
-  from: Bytes! # address
-  tokenSymbol: String! # string
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type TokenWithdrawn @entity(immutable: true) {
-  id: Bytes!
-  to: Bytes! # address
-  tokenSymbol: String! # string
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
 type DataInfo @entity {
     id: Bytes!
     dataTag: String
@@ -157,4 +79,11 @@ type TaskCounter @entity {
     pendingCount: Int
     completedCount: Int
     failedCount: Int
+}
+
+type FeeTokenInfo @entity {
+    id: String!
+    symbol: String!
+    tokenAddress: Bytes!
+    computingPrice: BigInt!
 }
