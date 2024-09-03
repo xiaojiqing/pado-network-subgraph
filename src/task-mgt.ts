@@ -1,5 +1,6 @@
 import {TaskDispatched, ResultReported, TaskCompleted, TaskFailed, TaskMgt} from "../generated/TaskMgt/TaskMgt"
 import {TaskInfo, TaskCounter, DataInfo} from "../generated/schema"
+import {Bytes} from "@graphprotocol/graph-ts"
 
 const counterName = "TaskCounter";
 
@@ -27,22 +28,10 @@ export function handleTaskDispatched(event: TaskDispatched): void {
     taskInfo.save();
 
     // update task counter
-    let taskCounter = TaskCounter.load(counterName);
-    if (!taskCounter) {
-        taskCounter = new TaskCounter(counterName);
-        taskCounter.pendingCount = 0;
-        taskCounter.completedCount = 0;
-        taskCounter.failedCount = 0;
-    }
-    taskCounter.pendingCount += 1;
-    taskCounter.save();
+    increasePendingTaskCount();
 
     // update data info
-    let dataInfo = DataInfo.load(task.dataId);
-    if (dataInfo !== null) {
-        dataInfo.purchaseCount += 1;
-        dataInfo.save();
-    }
+    increaseDataPurchaseCount(task.dataId);
 }
 
 export function handleResultReported(event: ResultReported): void {
@@ -69,12 +58,7 @@ export function handleTaskCompleted(event: TaskCompleted): void {
         taskInfo.save();
 
         // update task counter
-        const taskCounter = TaskCounter.load(counterName);
-        if (taskCounter !== null) {
-            taskCounter.pendingCount -= 1;
-            taskCounter.completedCount += 1;
-            taskCounter.save();
-        }
+        decreasePendingTaskCount(true);
     }
 }
 
@@ -88,12 +72,40 @@ export function handleTaskFailed(event: TaskFailed): void {
         taskInfo.save();
 
         // update task counter
-        const taskCounter = TaskCounter.load(counterName);
-        if (taskCounter !== null ) {
-            taskCounter.pendingCount -= 1;
-            taskCounter.failedCount += 1;
-            taskCounter.save();
-        }
+        decreasePendingTaskCount(false);
     }
 }
 
+function increasePendingTaskCount(): void {
+    let taskCounter = TaskCounter.load(counterName);
+    if (!taskCounter) {
+        taskCounter = new TaskCounter(counterName);
+        taskCounter.pendingCount = 0;
+        taskCounter.completedCount = 0;
+        taskCounter.failedCount = 0;
+    }
+    taskCounter.pendingCount += 1;
+    taskCounter.save();
+}
+
+function decreasePendingTaskCount(isSuccess: bool): void {
+    const taskCounter = TaskCounter.load(counterName);
+    if (taskCounter !== null) {
+        taskCounter.pendingCount -= 1;
+        if (isSuccess) {
+            taskCounter.completedCount += 1;
+        }
+        else {
+            taskCounter.failedCount += 1;
+        }
+        taskCounter.save();
+    }
+}
+
+function increaseDataPurchaseCount(dataId: Bytes): void {
+    let dataInfo = DataInfo.load(dataId);
+    if (dataInfo !== null) {
+        dataInfo.purchaseCount += 1;
+        dataInfo.save();
+    }
+}

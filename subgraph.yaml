@@ -69,6 +69,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - FeeTokenInfo
+        - FeeTokenCounter
       abis:
         - name: FeeMgt
           file: ./abis/FeeMgt.json

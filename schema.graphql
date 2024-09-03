@@ -87,3 +87,8 @@ type FeeTokenInfo @entity {
     tokenAddress: Bytes!
     computingPrice: BigInt!
 }
+
+type FeeTokenCounter @entity {
+    id: String!
+    tokenCount: Int
+}

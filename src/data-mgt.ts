@@ -24,14 +24,7 @@ export function handleDataRegistered(event: DataRegistered): void {
     dataInfo.save();
 
     // update data counter
-    let dataCounter = DataCounter.load(counterName);
-    if (dataCounter === null) {
-        dataCounter = new DataCounter(counterName);
-        dataCounter.validCount = 0;
-        dataCounter.deletedCount = 0;
-    }
-    dataCounter.validCount += 1
-    dataCounter.save();
+    increaseValidDataCounter();
 }
 
 export function handleDataDeleted(event: DataDeleted): void {
@@ -45,11 +38,26 @@ export function handleDataDeleted(event: DataDeleted): void {
         dataInfo.save();
 
         // update data counter
-        const dataCounter = DataCounter.load(counterName);
-        if (dataCounter !== null) {
-            dataCounter.validCount -= 1;
-            dataCounter.deletedCount += 1;
-            dataCounter.save();
-        }
+        decreaseValidDataCounter();
+    }
+}
+
+function increaseValidDataCounter(): void {
+    let dataCounter = DataCounter.load(counterName);
+    if (dataCounter === null) {
+        dataCounter = new DataCounter(counterName);
+        dataCounter.validCount = 0;
+        dataCounter.deletedCount = 0;
+    }
+    dataCounter.validCount += 1
+    dataCounter.save();
+}
+
+function decreaseValidDataCounter(): void {
+    const dataCounter = DataCounter.load(counterName);
+    if (dataCounter !== null) {
+        dataCounter.validCount -= 1;
+        dataCounter.deletedCount += 1;
+        dataCounter.save();
     }
 }
