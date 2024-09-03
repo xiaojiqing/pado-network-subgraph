@@ -2,37 +2,43 @@ import {
   FeeTokenAdded as FeeTokenAddedEvent,
   FeeTokenDeleted as FeeTokenDeletedEvent,
   FeeTokenUpdated as FeeTokenUpdatedEvent,
+  FeeMgt
 } from "../generated/FeeMgt/FeeMgt"
 import {
   FeeTokenInfo
 } from "../generated/schema"
-import {Bytes, store} from "@graphprotocol/graph-ts";
+import {Bytes, Address, store} from "@graphprotocol/graph-ts";
 
 export function handleFeeTokenAdded(event: FeeTokenAddedEvent): void {
-    let entity = new FeeTokenInfo(event.params.tokenSymbol.toHexString());
+    const entity = new FeeTokenInfo(event.params.tokenId.toHexString());
+    const feeMgt = FeeMgt.bind(event.address);
+    const feeTokenInfo = feeMgt.getFeeTokenById(event.params.tokenId);
 
-    entity.symbol = event.params.tokenSymbol.toString();
-    entity.tokenAddress = event.params.tokenAddress;
-    entity.computingPrice = event.params.computingPrice;
+    entity.symbol = feeTokenInfo.symbol;
+    entity.tokenAddress = feeTokenInfo.tokenAddress;
+    entity.computingPrice = feeTokenInfo.computingPrice;
     entity.save();
 }
 
 export function handleFeeTokenDeleted(event: FeeTokenDeletedEvent): void {
-    const feeTokenInfo = FeeTokenInfo.load(event.params.tokenSymbol.toHexString());
+    const feeTokenInfo = FeeTokenInfo.load(event.params.tokenId.toHexString());
     if (feeTokenInfo !== null) {
-        store.remove("FeeTokenInfo", event.params.tokenSymbol.toHexString());
+        store.remove("FeeTokenInfo", event.params.tokenId.toHexString());
     }
 }
 
 export function handleFeeTokenUpdated(event: FeeTokenUpdatedEvent): void {
-    let entity = FeeTokenInfo.load(event.params.tokenSymbol.toHexString());
+    let entity = FeeTokenInfo.load(event.params.tokenId.toHexString());
     if (entity === null) {
-        entity = new FeeTokenInfo(event.params.tokenSymbol.toHexString());
+        entity = new FeeTokenInfo(event.params.tokenId.toHexString());
     }
 
-    entity.symbol = event.params.tokenSymbol.toString();
-    entity.tokenAddress = event.params.tokenAddress;
-    entity.computingPrice = event.params.computingPrice;
+    const feeMgt = FeeMgt.bind(event.address);
+    const feeTokenInfo = feeMgt.getFeeTokenById(event.params.tokenId);
+
+    entity.symbol = feeTokenInfo.symbol;
+    entity.tokenAddress = feeTokenInfo.tokenAddress;
+    entity.computingPrice = feeTokenInfo.computingPrice;
     entity.save();
 }
 

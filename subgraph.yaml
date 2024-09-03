@@ -73,11 +73,11 @@ dataSources:
         - name: FeeMgt
           file: ./abis/FeeMgt.json
       eventHandlers:
-        - event: FeeTokenAdded(indexed string,address,uint256)
+        - event: FeeTokenAdded(indexed bytes32)
           handler: handleFeeTokenAdded
-        - event: FeeTokenDeleted(indexed string)
+        - event: FeeTokenDeleted(indexed bytes32)
           handler: handleFeeTokenDeleted
-        - event: FeeTokenUpdated(indexed string,address,uint256)
+        - event: FeeTokenUpdated(indexed bytes32)
           handler: handleFeeTokenUpdated
       file: ./src/fee-mgt.ts
   - kind: ethereum
