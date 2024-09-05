@@ -17,6 +17,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - WorkerInfo
+        - WorkerCounter
       abis:
         - name: WorkerMgt
           file: ./abis/WorkerMgt.json

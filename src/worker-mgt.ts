@@ -3,8 +3,11 @@ import {
   WorkerRegistry as WorkerRegistryEvent
 } from "../generated/WorkerMgt/WorkerMgt"
 import {
-  WorkerInfo
+  WorkerInfo,
+  WorkerCounter
 } from "../generated/schema"
+
+const counterName = "WorkerCounter";
 
 export function handleWorkerRegistry(event: WorkerRegistryEvent): void {
     let entity = new WorkerInfo(event.params.workerId);
@@ -24,4 +27,18 @@ export function handleWorkerRegistry(event: WorkerRegistryEvent): void {
     entity.delegationAmount = worker.delegationAmount;
 
     entity.save();
+
+    // update worker count
+    increaseWorkerCount();
+}
+
+function increaseWorkerCount(): void {
+    let workerCounter = WorkerCounter.load(counterName);
+    if (workerCounter === null) {
+        workerCounter = new WorkerCounter(counterName);
+        workerCounter.workerCount = 0;
+    }
+
+    workerCounter.workerCount += 1;
+    workerCounter.save();
 }

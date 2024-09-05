@@ -72,3 +72,8 @@ type FeeTokenCounter @entity {
     id: String!
     tokenCount: Int
 }
+
+type WorkerCounter @entity {
+    id: String!
+    workerCount: Int
+}
