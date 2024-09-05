@@ -16,20 +16,11 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Initialized
-        - OwnershipTransferred
-        - SelectDataWorkers
-        - WorkerRegistry
+        - WorkerInfo
       abis:
         - name: WorkerMgt
           file: ./abis/WorkerMgt.json
       eventHandlers:
-        - event: Initialized(uint8)
-          handler: handleInitialized
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: SelectDataWorkers(indexed bytes32,bytes32[])
-          handler: handleSelectDataWorkers
         - event: WorkerRegistry(indexed bytes32,uint8,address)
           handler: handleWorkerRegistry
       file: ./src/worker-mgt.ts
