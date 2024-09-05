@@ -24,6 +24,8 @@ dataSources:
       eventHandlers:
         - event: WorkerRegistry(indexed bytes32,uint8,address)
           handler: handleWorkerRegistry
+        - event: WorkerDeregistry(indexed bytes32)
+          handler: handleWorkerDeregistry
       file: ./src/worker-mgt.ts
   - kind: ethereum
     name: DataMgt

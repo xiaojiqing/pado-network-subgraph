@@ -1,6 +1,7 @@
 import {
   WorkerMgt,
-  WorkerRegistry as WorkerRegistryEvent
+  WorkerRegistry as WorkerRegistryEvent,
+  WorkerDeregistry as WorkerDeregistryEvent
 } from "../generated/WorkerMgt/WorkerMgt"
 import {
   WorkerInfo,
@@ -31,6 +32,19 @@ export function handleWorkerRegistry(event: WorkerRegistryEvent): void {
     // update worker count
     increaseWorkerCount();
 }
+export function handleWorkerDeregistry(event: WorkerDeregistryEvent): void {
+    let entity = WorkerInfo.load(event.params.workerId);
+
+    let workerMgt = WorkerMgt.bind(event.address);
+    let worker = workerMgt.getWorkerById(event.params.workerId);
+    if (entity !== null) {
+        entity.status = worker.status;
+        entity.save();
+
+        // update worker count
+        decreaseWorkerCount();
+    }
+}
 
 function increaseWorkerCount(): void {
     let workerCounter = WorkerCounter.load(counterName);
@@ -41,4 +55,11 @@ function increaseWorkerCount(): void {
 
     workerCounter.workerCount += 1;
     workerCounter.save();
+}
+
+function decreaseWorkerCount(): void {
+    let workerCounter = WorkerCounter.load(counterName);
+    if (workerCounter !== null) {
+        workerCounter.workerCount -= 1;
+    }
 }
